@@ -1,38 +1,24 @@
 import Layout from "@/components/Layout";
 import { Link } from "react-router-dom";
 import { ArrowRight, Star } from "lucide-react";
+import { useProducts } from "@/contexts/ProductsContext";
+
+const productImages = {
+  "Parachute Adams": "linear-gradient(135deg, #8B7355 0%, #654321 100%)",
+  "Elk Hair Caddis": "linear-gradient(135deg, #CD853F 0%, #A0522D 100%)",
+  "Woolly Bugger Assortment": "linear-gradient(135deg, #2F4F4F 0%, #1C1C1C 100%)",
+  "Royal Wulff Pack": "linear-gradient(135deg, #DC143C 0%, #8B0000 100%)",
+};
 
 export default function Index() {
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Parachute Adams",
-      price: "$2.99",
-      image: "linear-gradient(135deg, #8B7355 0%, #654321 100%)",
-      badge: "Best Seller",
-    },
-    {
-      id: 2,
-      name: "Elk Hair Caddis",
-      price: "$3.49",
-      image: "linear-gradient(135deg, #CD853F 0%, #A0522D 100%)",
-      badge: "New",
-    },
-    {
-      id: 3,
-      name: "Woolly Bugger Assortment",
-      price: "$12.99",
-      image: "linear-gradient(135deg, #2F4F4F 0%, #1C1C1C 100%)",
-      badge: "Premium",
-    },
-    {
-      id: 4,
-      name: "Royal Wulff Pack",
-      price: "$8.99",
-      image: "linear-gradient(135deg, #DC143C 0%, #8B0000 100%)",
-      badge: null,
-    },
-  ];
+  const { products } = useProducts();
+  const defaultImages: { [key: string]: string } = {
+    ...productImages,
+  };
+
+  const getImageForProduct = (name: string) => {
+    return defaultImages[name] || "linear-gradient(135deg, #8B7355 0%, #654321 100%)";
+  };
 
   const testimonials = [
     {
@@ -117,7 +103,7 @@ export default function Index() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product, idx) => (
+            {products.map((product, idx) => (
               <div
                 key={product.id}
                 className="group cursor-pointer animate-fade-in"
@@ -125,7 +111,7 @@ export default function Index() {
               >
                 <div
                   className="relative h-64 rounded-xl mb-4 overflow-hidden"
-                  style={{ background: product.image }}
+                  style={{ background: getImageForProduct(product.name) }}
                 >
                   {product.badge && (
                     <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold">
@@ -134,7 +120,7 @@ export default function Index() {
                   )}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
                 </div>
-                
+
                 <div className="space-y-2">
                   <h3 className="font-display font-semibold text-foreground group-hover:text-primary transition-colors">
                     {product.name}

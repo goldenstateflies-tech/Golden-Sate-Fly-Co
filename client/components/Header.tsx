@@ -34,6 +34,13 @@ export default function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
+          <Link
+            to="/admin/login"
+            className="px-3 py-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+            title="Admin Panel"
+          >
+            ⚙️
+          </Link>
           <button className="w-10 h-10 rounded-lg border border-border hover:bg-muted transition-colors flex items-center justify-center">
             <svg
               className="w-5 h-5"
