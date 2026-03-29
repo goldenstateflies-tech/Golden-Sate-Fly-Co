@@ -6,48 +6,48 @@ export default function Index() {
   const featuredProducts = [
     {
       id: 1,
-      name: "Golden State Hoodie",
-      price: "$89.99",
-      image: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
-      badge: "New",
+      name: "Parachute Adams",
+      price: "$2.99",
+      image: "linear-gradient(135deg, #8B7355 0%, #654321 100%)",
+      badge: "Best Seller",
     },
     {
       id: 2,
-      name: "Premium Tee",
-      price: "$49.99",
-      image: "linear-gradient(135deg, #1f2937 0%, #111827 100%)",
-      badge: "Featured",
+      name: "Elk Hair Caddis",
+      price: "$3.49",
+      image: "linear-gradient(135deg, #CD853F 0%, #A0522D 100%)",
+      badge: "New",
     },
     {
       id: 3,
-      name: "Cargo Pants",
-      price: "$129.99",
-      image: "linear-gradient(135deg, #d4af37 0%, #b8960f 100%)",
-      badge: "Sale",
+      name: "Woolly Bugger Assortment",
+      price: "$12.99",
+      image: "linear-gradient(135deg, #2F4F4F 0%, #1C1C1C 100%)",
+      badge: "Premium",
     },
     {
       id: 4,
-      name: "Fly Cap",
-      price: "$39.99",
-      image: "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)",
+      name: "Royal Wulff Pack",
+      price: "$8.99",
+      image: "linear-gradient(135deg, #DC143C 0%, #8B0000 100%)",
       badge: null,
     },
   ];
 
   const testimonials = [
     {
-      name: "Alex Rivera",
-      text: "The quality is insane. Golden State Fly Co. is my new go-to brand.",
+      name: "Mike Rodriguez",
+      text: "These flies have transformed my dry fly fishing. Caught more trout in a week than all of last month.",
       rating: 5,
     },
     {
-      name: "Jordan Smith",
-      text: "Perfect fit, amazing style. Every piece feels premium.",
+      name: "Sarah Chen",
+      text: "The attention to detail is incredible. Every fly is perfectly weighted and tied. Worth every penny.",
       rating: 5,
     },
     {
-      name: "Casey Chen",
-      text: "Love the attention to detail. This is authentic streetwear.",
+      name: "Tom Williams",
+      text: "Golden State Fly Co. is now my only source. These are the best hand-tied flies I've ever used on the water.",
       rating: 5,
     },
   ];
@@ -71,7 +71,7 @@ export default function Index() {
               </h1>
               
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-lg">
-                Premium streetwear crafted for those who dare to stand out. Inspired by California's vibrant culture, elevated by meticulous craftsmanship.
+                Hand-tied fishing flies crafted with precision and passion. Premium materials and expert craftsmanship for the discerning angler in California and beyond.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -167,21 +167,11 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-primary/20 flex items-center justify-center">
-                <span className="text-3xl">✨</span>
+                <span className="text-3xl">🎣</span>
               </div>
-              <h3 className="font-display font-bold text-lg mb-3">Premium Quality</h3>
+              <h3 className="font-display font-bold text-lg mb-3">Expert Crafted</h3>
               <p className="text-secondary-foreground/80">
-                Crafted with the finest materials and attention to detail
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-primary/20 flex items-center justify-center">
-                <span className="text-3xl">🌍</span>
-              </div>
-              <h3 className="font-display font-bold text-lg mb-3">Sustainable</h3>
-              <p className="text-secondary-foreground/80">
-                Eco-conscious production methods and ethical sourcing
+                Hand-tied by experienced fly tiers with decades of angling knowledge
               </p>
             </div>
 
@@ -189,9 +179,19 @@ export default function Index() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-primary/20 flex items-center justify-center">
                 <span className="text-3xl">⚡</span>
               </div>
-              <h3 className="font-display font-bold text-lg mb-3">Fast Shipping</h3>
+              <h3 className="font-display font-bold text-lg mb-3">Premium Materials</h3>
               <p className="text-secondary-foreground/80">
-                Quick delivery to get you looking fresh faster
+                Only the finest fur, feathers, and thread for maximum durability and action
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-primary/20 flex items-center justify-center">
+                <span className="text-3xl">🚀</span>
+              </div>
+              <h3 className="font-display font-bold text-lg mb-3">Fast Delivery</h3>
+              <p className="text-secondary-foreground/80">
+                Quick shipping so you can get on the water faster
               </p>
             </div>
           </div>
@@ -232,10 +232,10 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="font-display text-4xl font-bold text-primary-foreground mb-4">
-              Join the Crew
+              Stay Updated
             </h2>
             <p className="text-lg text-primary-foreground/90 mb-8">
-              Get exclusive drops, early access to new collections, and insider updates
+              Get new fly patterns, seasonal tips, and exclusive subscriber discounts delivered to your inbox
             </p>
 
             <form className="flex flex-col sm:flex-row gap-2">
