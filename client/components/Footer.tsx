@@ -10,9 +10,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
-                <span className="font-display font-bold text-primary-foreground text-sm">GS</span>
-              </div>
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Ff1249bb6ca8c47b98bb5431c04b7046e%2F6a92d43dc9c548f28362cbdd1fc0a3c7?format=webp&width=800&height=1200"
+                alt="Golden State Fly Co."
+                className="w-8 h-8 object-contain"
+              />
               <span className="font-display font-bold text-foreground">Golden State Fly Co.</span>
             </div>
             <p className="text-muted-foreground text-sm">Hand-tied fishing flies for the discerning angler.</p>

@@ -11,9 +11,11 @@ export default function Header() {
     <header className="border-b border-border bg-background sticky top-0 z-40">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center">
-            <span className="font-display font-bold text-primary-foreground text-lg">GS</span>
-          </div>
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets%2Ff1249bb6ca8c47b98bb5431c04b7046e%2F6a92d43dc9c548f28362cbdd1fc0a3c7?format=webp&width=800&height=1200"
+            alt="Golden State Fly Co."
+            className="w-10 h-10 object-contain"
+          />
           <span className="hidden sm:inline font-display font-bold text-lg text-foreground">Golden State Fly Co.</span>
         </Link>
 
