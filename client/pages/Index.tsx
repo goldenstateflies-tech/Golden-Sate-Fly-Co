@@ -77,14 +77,12 @@ export default function Index() {
               </div>
             </div>
 
-            <div className="animate-slide-up relative h-96 md:h-full">
-              <div
-                className="absolute inset-0 rounded-2xl shadow-2xl opacity-90"
-                style={{
-                  background: "linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)",
-                }}
+            <div className="animate-slide-up relative h-96 md:h-full flex items-center justify-center">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets%2Ff1249bb6ca8c47b98bb5431c04b7046e%2F6a92d43dc9c548f28362cbdd1fc0a3c7?format=webp&width=800&height=1200"
+                alt="Golden State Fly Co. Logo"
+                className="w-full h-full object-contain drop-shadow-2xl"
               />
-              <div className="absolute inset-4 bg-white/10 rounded-xl backdrop-blur-sm" />
             </div>
           </div>
         </div>
