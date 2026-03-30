@@ -15,6 +15,8 @@ export default function AdminDashboard() {
     price: "",
     description: "",
     badge: "",
+    stock: 0,
+    image: "",
   });
 
   const handleLogout = () => {
@@ -30,6 +32,8 @@ export default function AdminDashboard() {
         price: product.price,
         description: product.description || "",
         badge: product.badge || "",
+        stock: product.stock || 0,
+        image: product.image || "",
       });
     } else {
       setEditingId(null);
@@ -38,6 +42,8 @@ export default function AdminDashboard() {
         price: "",
         description: "",
         badge: "",
+        stock: 0,
+        image: "",
       });
     }
     setIsModalOpen(true);
@@ -51,12 +57,26 @@ export default function AdminDashboard() {
       price: "",
       description: "",
       badge: "",
+      stock: 0,
+      image: "",
     });
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64 = event.target?.result as string;
+        setFormData({ ...formData, image: base64 });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.price) {
       alert("Please fill in all required fields");
       return;
@@ -67,6 +87,8 @@ export default function AdminDashboard() {
       price: formData.price,
       description: formData.description || undefined,
       badge: formData.badge || null,
+      stock: formData.stock,
+      image: formData.image || undefined,
     };
 
     if (editingId) {
@@ -137,16 +159,19 @@ export default function AdminDashboard() {
                 <thead className="bg-muted border-b border-border">
                   <tr>
                     <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
+                      Image
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                       Product Name
                     </th>
                     <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
                       Price
                     </th>
                     <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
-                      Badge
+                      Stock
                     </th>
                     <th className="px-6 py-3 text-left text-sm font-semibold text-foreground">
-                      Description
+                      Badge
                     </th>
                     <th className="px-6 py-3 text-right text-sm font-semibold text-foreground">
                       Actions
@@ -159,11 +184,29 @@ export default function AdminDashboard() {
                       key={product.id}
                       className={idx % 2 === 0 ? "bg-background" : "bg-muted/50"}
                     >
+                      <td className="px-6 py-4">
+                        {product.image ? (
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-10 h-10 object-cover rounded"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 bg-muted rounded flex items-center justify-center text-xs text-muted-foreground">
+                            —
+                          </div>
+                        )}
+                      </td>
                       <td className="px-6 py-4 font-medium text-foreground">
                         {product.name}
                       </td>
                       <td className="px-6 py-4 text-primary font-semibold">
                         {product.price}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="inline-block px-2 py-1 bg-primary/10 text-primary text-sm font-semibold rounded">
+                          {product.stock || 0} in stock
+                        </span>
                       </td>
                       <td className="px-6 py-4">
                         {product.badge ? (
@@ -173,9 +216,6 @@ export default function AdminDashboard() {
                         ) : (
                           <span className="text-muted-foreground text-sm">—</span>
                         )}
-                      </td>
-                      <td className="px-6 py-4 text-muted-foreground text-sm max-w-xs truncate">
-                        {product.description || "—"}
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex gap-2 justify-end">
@@ -220,7 +260,7 @@ export default function AdminDashboard() {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 max-h-96 overflow-y-auto">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1">
                   Product Name *
@@ -249,6 +289,46 @@ export default function AdminDashboard() {
                   placeholder="e.g., $2.99"
                   className="w-full px-3 py-2 border border-border rounded-lg bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1">
+                  Stock Level
+                </label>
+                <input
+                  type="number"
+                  value={formData.stock}
+                  onChange={(e) =>
+                    setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })
+                  }
+                  placeholder="e.g., 25"
+                  min="0"
+                  className="w-full px-3 py-2 border border-border rounded-lg bg-input text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1">
+                  Product Image
+                </label>
+                {formData.image && (
+                  <div className="mb-2 rounded-lg overflow-hidden border border-border h-32">
+                    <img
+                      src={formData.image}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="w-full px-3 py-2 border border-border rounded-lg bg-input text-foreground text-sm file:bg-primary file:text-primary-foreground file:px-3 file:py-1 file:rounded file:border-0 file:cursor-pointer file:mr-3"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Max 5MB. Formats: JPG, PNG, WebP
+                </p>
               </div>
 
               <div>

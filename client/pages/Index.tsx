@@ -108,12 +108,30 @@ export default function Index() {
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <div
-                  className="relative h-64 rounded-xl mb-4 overflow-hidden"
-                  style={{ background: getImageForProduct(product.name) }}
+                  className="relative h-64 rounded-xl mb-4 overflow-hidden bg-cover bg-center"
+                  style={{
+                    backgroundImage: product.image
+                      ? `url(${product.image})`
+                      : `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="${getImageForProduct(product.name).split("(")[1]?.split("%")[0] || "%23999"}" width="100" height="100"/></svg>')`,
+                    backgroundColor: getImageForProduct(product.name),
+                  }}
                 >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   {product.badge && (
                     <div className="absolute top-4 right-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold">
                       {product.badge}
+                    </div>
+                  )}
+                  {product.stock !== undefined && product.stock < 10 && product.stock > 0 && (
+                    <div className="absolute top-4 left-4 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      Low Stock
+                    </div>
+                  )}
+                  {product.stock === 0 && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <span className="text-white font-semibold bg-destructive px-4 py-2 rounded">
+                        Out of Stock
+                      </span>
                     </div>
                   )}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
@@ -124,6 +142,11 @@ export default function Index() {
                     {product.name}
                   </h3>
                   <p className="text-primary font-semibold">{product.price}</p>
+                  {product.stock !== undefined && (
+                    <p className="text-xs text-muted-foreground">
+                      {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}

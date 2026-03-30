@@ -6,6 +6,8 @@ export interface Product {
   price: string;
   description?: string;
   badge?: string | null;
+  image?: string; // base64 or image data
+  stock?: number;
 }
 
 interface ProductsContextType {
@@ -24,6 +26,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     price: "$2.99",
     description: "Classic dry fly pattern",
     badge: "Best Seller",
+    stock: 45,
   },
   {
     id: "2",
@@ -31,6 +34,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     price: "$3.49",
     description: "Excellent caddis imitation",
     badge: "New",
+    stock: 32,
   },
   {
     id: "3",
@@ -38,6 +42,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     price: "$12.99",
     description: "Versatile nymph patterns",
     badge: "Premium",
+    stock: 18,
   },
   {
     id: "4",
@@ -45,6 +50,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     price: "$8.99",
     description: "Dry fly assortment",
     badge: null,
+    stock: 27,
   },
 ];
 
