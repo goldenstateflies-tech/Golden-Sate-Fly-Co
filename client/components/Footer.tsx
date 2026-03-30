@@ -15,7 +15,7 @@ export default function Footer() {
               </div>
               <span className="font-display font-bold text-foreground">Golden State Fly Co.</span>
             </div>
-            <p className="text-muted-foreground text-sm">Premium streetwear for the modern explorer.</p>
+            <p className="text-muted-foreground text-sm">Hand-tied fishing flies for the discerning angler.</p>
           </div>
 
           {/* Shop */}
