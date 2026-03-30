@@ -17,6 +17,7 @@ export default function AdminDashboard() {
     badge: "",
     stock: 0,
     image: "",
+    gallery: [] as string[],
   });
 
   const handleLogout = () => {
@@ -34,6 +35,7 @@ export default function AdminDashboard() {
         badge: product.badge || "",
         stock: product.stock || 0,
         image: product.image || "",
+        gallery: product.gallery || [],
       });
     } else {
       setEditingId(null);
@@ -44,6 +46,7 @@ export default function AdminDashboard() {
         badge: "",
         stock: 0,
         image: "",
+        gallery: [],
       });
     }
     setIsModalOpen(true);
@@ -59,6 +62,7 @@ export default function AdminDashboard() {
       badge: "",
       stock: 0,
       image: "",
+      gallery: [],
     });
   };
 
@@ -72,6 +76,38 @@ export default function AdminDashboard() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleGalleryUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      const newGalleryImages: string[] = [];
+      let loadedCount = 0;
+
+      Array.from(files).forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const base64 = event.target?.result as string;
+          newGalleryImages.push(base64);
+          loadedCount++;
+
+          if (loadedCount === files.length) {
+            setFormData({
+              ...formData,
+              gallery: [...formData.gallery, ...newGalleryImages],
+            });
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  };
+
+  const removeGalleryImage = (index: number) => {
+    setFormData({
+      ...formData,
+      gallery: formData.gallery.filter((_, i) => i !== index),
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -89,6 +125,7 @@ export default function AdminDashboard() {
       badge: formData.badge || null,
       stock: formData.stock,
       image: formData.image || undefined,
+      gallery: formData.gallery.length > 0 ? formData.gallery : undefined,
     };
 
     if (editingId) {
@@ -309,7 +346,7 @@ export default function AdminDashboard() {
 
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1">
-                  Product Image
+                  Main Product Image (Cover)
                 </label>
                 {formData.image && (
                   <div className="mb-2 rounded-lg overflow-hidden border border-border h-32">
@@ -327,7 +364,46 @@ export default function AdminDashboard() {
                   className="w-full px-3 py-2 border border-border rounded-lg bg-input text-foreground text-sm file:bg-primary file:text-primary-foreground file:px-3 file:py-1 file:rounded file:border-0 file:cursor-pointer file:mr-3"
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  Max 5MB. Formats: JPG, PNG, WebP
+                  This will be the main product image
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1">
+                  Gallery Images (Additional Photos)
+                </label>
+                {formData.gallery.length > 0 && (
+                  <div className="mb-3 grid grid-cols-3 gap-2">
+                    {formData.gallery.map((img, idx) => (
+                      <div
+                        key={idx}
+                        className="relative aspect-square rounded-lg overflow-hidden border border-border"
+                      >
+                        <img
+                          src={img}
+                          alt={`Gallery ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryImage(idx)}
+                          className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black/50 transition-opacity"
+                        >
+                          <span className="text-white font-bold">✕</span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleGalleryUpload}
+                  className="w-full px-3 py-2 border border-border rounded-lg bg-input text-foreground text-sm file:bg-primary file:text-primary-foreground file:px-3 file:py-1 file:rounded file:border-0 file:cursor-pointer file:mr-3"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Upload multiple images for the product gallery. Hover over images to remove.
                 </p>
               </div>
 

@@ -6,7 +6,8 @@ export interface Product {
   price: string;
   description?: string;
   badge?: string | null;
-  image?: string; // base64 or image data
+  image?: string; // main/cover image
+  gallery?: string[]; // additional gallery images
   stock?: number;
 }
 
@@ -27,6 +28,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     description: "Classic dry fly pattern",
     badge: "Best Seller",
     stock: 45,
+    gallery: [],
   },
   {
     id: "2",
@@ -35,6 +37,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     description: "Excellent caddis imitation",
     badge: "New",
     stock: 32,
+    gallery: [],
   },
   {
     id: "3",
@@ -43,6 +46,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     description: "Versatile nymph patterns",
     badge: "Premium",
     stock: 18,
+    gallery: [],
   },
   {
     id: "4",
@@ -51,6 +55,7 @@ const DEFAULT_PRODUCTS: Product[] = [
     description: "Dry fly assortment",
     badge: null,
     stock: 27,
+    gallery: [],
   },
 ];
 
