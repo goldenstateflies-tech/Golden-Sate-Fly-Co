@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import { Link } from "react-router-dom";
 import { useProducts } from "@/contexts/ProductsContext";
 
 const productImages = {
@@ -46,8 +47,9 @@ export default function Shop() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {products.map((product, idx) => (
-                <div
+                <Link
                   key={product.id}
+                  to={`/product/${product.id}`}
                   className="group cursor-pointer hover:shadow-lg transition-shadow rounded-xl overflow-hidden"
                 >
                   <div
@@ -94,7 +96,7 @@ export default function Shop() {
                       </p>
                     )}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

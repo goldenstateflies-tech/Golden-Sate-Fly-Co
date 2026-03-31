@@ -10,6 +10,7 @@ import { AdminProvider } from "@/contexts/AdminContext";
 import { ProductsProvider } from "@/contexts/ProductsContext";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import AdminLogin from "./pages/AdminLogin";
@@ -28,22 +29,23 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/admin/login" element={<AdminLogin />} />
-              <Route
-                path="/admin/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <AdminDashboard />
-                  </ProtectedRoute>
-                }
-              />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
           </BrowserRouter>
         </TooltipProvider>
       </ProductsProvider>

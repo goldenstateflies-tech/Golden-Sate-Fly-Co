@@ -102,9 +102,10 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product, idx) => (
-              <div
+              <Link
                 key={product.id}
-                className="group cursor-pointer animate-fade-in"
+                to={`/product/${product.id}`}
+                className="group cursor-pointer animate-fade-in hover:shadow-lg transition-shadow rounded-xl overflow-hidden"
                 style={{ animationDelay: `${idx * 0.1}s` }}
               >
                 <div
@@ -148,7 +149,7 @@ export default function Index() {
                     </p>
                   )}
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
