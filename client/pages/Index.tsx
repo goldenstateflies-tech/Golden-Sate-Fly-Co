@@ -11,7 +11,7 @@ const productImages = {
 };
 
 export default function Index() {
-  const { products } = useProducts();
+  const { products, isLoading } = useProducts();
   const defaultImages: { [key: string]: string } = {
     ...productImages,
   };
@@ -100,6 +100,14 @@ export default function Index() {
             </p>
           </div>
 
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="text-center">
+                <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-muted-foreground">Loading products...</p>
+              </div>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product, idx) => (
               <Link
@@ -152,6 +160,7 @@ export default function Index() {
               </Link>
             ))}
           </div>
+          )}
 
           <div className="mt-12 text-center">
             <Link

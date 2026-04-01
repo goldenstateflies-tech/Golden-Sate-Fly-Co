@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useProducts } from "@/contexts/ProductsContext";
 import Layout from "@/components/Layout";
-import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 
 const productImages = {
   "Parachute Adams": "linear-gradient(135deg, #8B7355 0%, #654321 100%)",
@@ -13,8 +13,11 @@ const productImages = {
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const { products } = useProducts();
+  const { products, buyProduct } = useProducts();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [isBuying, setIsBuying] = useState(false);
+  const [buyMessage, setBuyMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const defaultImages: { [key: string]: string } = {
     ...productImages,
@@ -70,6 +73,35 @@ export default function ProductDetail() {
       setSelectedImageIndex((prev) =>
         prev === 0 ? allImages.length - 1 : prev - 1
       );
+    }
+  };
+
+  const handleBuy = async () => {
+    if (!product) return;
+    setIsBuying(true);
+    setBuyMessage(null);
+
+    try {
+      const success = await buyProduct(product.id, quantity);
+      if (success) {
+        setBuyMessage({
+          type: "success",
+          text: `Successfully purchased ${quantity} ${product.name}!`,
+        });
+        setQuantity(1);
+      } else {
+        setBuyMessage({
+          type: "error",
+          text: "Unable to complete purchase. Not enough stock.",
+        });
+      }
+    } catch (err) {
+      setBuyMessage({
+        type: "error",
+        text: "Error processing purchase. Please try again.",
+      });
+    } finally {
+      setIsBuying(false);
     }
   };
 
