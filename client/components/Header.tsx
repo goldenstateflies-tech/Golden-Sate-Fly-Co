@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { totalItems } = useCart();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -37,42 +39,24 @@ export default function Header() {
 
         <div className="hidden md:flex items-center gap-4">
           <Link
+            to="/cart"
+            className="relative w-10 h-10 rounded-lg border border-border hover:bg-muted transition-colors flex items-center justify-center"
+            title="Shopping Cart"
+          >
+            <ShoppingCart className="w-5 h-5" />
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {totalItems}
+              </span>
+            )}
+          </Link>
+          <Link
             to="/admin/login"
             className="px-3 py-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
             title="Admin Panel"
           >
             ⚙️
           </Link>
-          <button className="w-10 h-10 rounded-lg border border-border hover:bg-muted transition-colors flex items-center justify-center">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 17l-4 4m0 0l-4-4m4 4V3"
-              />
-            </svg>
-          </button>
-          <button className="w-10 h-10 rounded-lg border border-border hover:bg-muted transition-colors flex items-center justify-center">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </button>
         </div>
 
         {/* Mobile Menu Button */}

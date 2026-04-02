@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useProducts } from "@/contexts/ProductsContext";
+import { useCart } from "@/contexts/CartContext";
 import Layout from "@/components/Layout";
-import { ArrowLeft, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, ShoppingCart, Check } from "lucide-react";
 
 const productImages = {
   "Parachute Adams": "linear-gradient(135deg, #8B7355 0%, #654321 100%)",
@@ -13,11 +14,13 @@ const productImages = {
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
-  const { products, buyProduct } = useProducts();
+  const { products } = useProducts();
+  const { addItem } = useCart();
+  const navigate = useNavigate();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [isBuying, setIsBuying] = useState(false);
-  const [buyMessage, setBuyMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   const defaultImages: { [key: string]: string } = {
     ...productImages,
@@ -76,32 +79,21 @@ export default function ProductDetail() {
     }
   };
 
-  const handleBuy = async () => {
+  const handleAddToCart = () => {
     if (!product) return;
-    setIsBuying(true);
-    setBuyMessage(null);
+    setIsAdding(true);
 
     try {
-      const success = await buyProduct(product.id, quantity);
-      if (success) {
-        setBuyMessage({
-          type: "success",
-          text: `Successfully purchased ${quantity} ${product.name}!`,
-        });
-        setQuantity(1);
-      } else {
-        setBuyMessage({
-          type: "error",
-          text: "Unable to complete purchase. Not enough stock.",
-        });
-      }
-    } catch (err) {
-      setBuyMessage({
-        type: "error",
-        text: "Error processing purchase. Please try again.",
-      });
+      addItem(product, quantity);
+      setAddedToCart(true);
+      setQuantity(1);
+
+      // Reset the success message after 2 seconds
+      setTimeout(() => {
+        setAddedToCart(false);
+      }, 2000);
     } finally {
-      setIsBuying(false);
+      setIsAdding(false);
     }
   };
 
@@ -250,13 +242,52 @@ export default function ProductDetail() {
                 </div>
               )}
 
-              {/* Add to Cart Button */}
-              <div className="pt-4">
+              {/* Quantity Selector & Add to Cart */}
+              <div className="pt-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-medium text-foreground">Quantity:</span>
+                  <div className="flex items-center gap-2 border border-border rounded-lg">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="px-3 py-2 hover:bg-muted transition-colors"
+                    >
+                      −
+                    </button>
+                    <span className="w-8 text-center font-semibold">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="px-3 py-2 hover:bg-muted transition-colors"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
                 <button
-                  disabled={product.stock === 0}
-                  className="w-full px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleAddToCart}
+                  disabled={product.stock === 0 || isAdding}
+                  className="w-full px-6 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+                  {addedToCart ? (
+                    <>
+                      <Check className="w-5 h-5" />
+                      Added to Cart!
+                    </>
+                  ) : product.stock === 0 ? (
+                    "Out of Stock"
+                  ) : (
+                    <>
+                      <ShoppingCart className="w-5 h-5" />
+                      Add to Cart
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={() => navigate("/cart")}
+                  className="w-full px-6 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  View Cart
                 </button>
               </div>
 
