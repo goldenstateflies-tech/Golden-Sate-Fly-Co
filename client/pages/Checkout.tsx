@@ -123,6 +123,35 @@ export default function Checkout() {
         await buyProduct(item.product.id, item.quantity);
       }
 
+      // Send order confirmation email
+      try {
+        await fetch("/.netlify/functions/send-order-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: items.map((item) => ({
+              name: item.product.name,
+              price: item.product.price,
+              quantity: item.quantity,
+            })),
+            totalPrice: totalPrice,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            zip: formData.zip,
+          }),
+        });
+      } catch (emailError) {
+        console.error("Email sending error:", emailError);
+        // Don't fail the order if email fails
+      }
+
       // Clear cart and show success
       clearCart();
       setOrderPlaced(true);
